@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asgmt.task.sample.dao.SampleDao">
+
+	<select id="selectTable" parameterType="com.asgmt.task.sample.vo.SamplePVo"
+	resultType="com.asgmt.task.sample.vo.SampleRVo">
+	SELECT snake_to_camel(T.COLUMN_NAME)  	AS CAMEL
+	     , T.COLUMN_NAME					AS SNAKE
+	     , T.COLUMN_COMMENT 				AS COMENT
+	FROM INFORMATION_SCHEMA.`COLUMNS` T
+	WHERE T.TABLE_SCHEMA = 'savesociallife' AND T.TABLE_NAME = #{tableNm}
+	</select>
+</mapper>
