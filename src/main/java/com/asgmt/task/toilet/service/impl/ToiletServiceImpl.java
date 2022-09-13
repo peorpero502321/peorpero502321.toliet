@@ -19,6 +19,9 @@ public class ToiletServiceImpl implements ToiletService{
 	public List<String> selectToiletList() {
 		List<String> toiletList = new ArrayList<String>();
 		
+		System.out.println(toilet.selectToilet());
+		
+		
 		toiletList.add(0, "test0");
 		toiletList.add(1, "test1");
 		toiletList.add(2, "test2");
