@@ -7,8 +7,28 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:forEach var="list" items="${result}">
-		<div>${list}</div>
-	</c:forEach>
+	<table>
+		<tr>
+			SELECT 
+		</tr>
+		<c:forEach var="list" items="${result}" varStatus="index">
+			<tr>
+				<c:if test="${!index.last}">
+					<td>${list.snake}, /* ${list.coment} */ </td>
+				</c:if>
+				<c:if test="${index.last}">
+					<td>${list.snake} /* ${list.coment} */ </td>
+				</c:if>
+			</tr>
+		</c:forEach>
+	</table>
+	<br><br><br><br>
+	<table>
+		<c:forEach var="list" items="${result}" varStatus="index">
+			<tr>
+				<td>private String ${list.snake}; /* ${list.coment} */ </td>
+			</tr>
+		</c:forEach>
+	</table>
 </body>
 </html>

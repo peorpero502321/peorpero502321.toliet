@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asgmt.task.toilet.service.ToiletService;
+import com.asgmt.task.toilet.vo.ToiletRVo;
 
 @RestController
 public class ToiletApiController {
@@ -16,7 +17,7 @@ public class ToiletApiController {
 	private ToiletService toilet;
 	
 	@RequestMapping(value="/api/toilet", method = RequestMethod.GET)
-	public List<String> selectToiletList() {
+	public List<ToiletRVo> selectToiletList() {
 		
 		System.out.println("화장실 페이지 호출 + data" + toilet.selectToiletList());
 		return toilet.selectToiletList();
