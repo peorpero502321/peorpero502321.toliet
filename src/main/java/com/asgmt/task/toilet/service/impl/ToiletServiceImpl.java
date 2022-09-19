@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.asgmt.task.toilet.dao.ToiletDao;
 import com.asgmt.task.toilet.service.ToiletService;
+import com.asgmt.task.toilet.vo.ToiletPVo;
 import com.asgmt.task.toilet.vo.ToiletRVo;
 
 @Service
@@ -16,8 +17,8 @@ public class ToiletServiceImpl implements ToiletService{
 	private ToiletDao toilet;
 	
 	@Override
-	public List<ToiletRVo> selectToiletList() {
-		return toilet.selectToilet();
+	public List<ToiletRVo> selectToiletList(ToiletPVo paramVO) {
+		return toilet.selectToilet(paramVO);
 	}
 	
 }
