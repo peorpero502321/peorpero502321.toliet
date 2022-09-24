@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
+
 <mapper namespace="com.asgmt.task.toilet.dao.ToiletDao">
-	
+
 	<!-- 조회 -->
-	<select id="selectToilet" parameterType="com.asgmt.task.toilet.vo.ToiletPVo" 
+	<select id="selectToilet" parameterType="com.asgmt.task.toilet.vo.ToiletPVo"
 	resultType="com.asgmt.task.toilet.vo.ToiletRVo">
-		SELECT 
+		SELECT
 			T.PUBLFACLT_DIV_NM, /* 구분 */
 			T.PBCTLT_PLC_NM, /* 화장실명 */
 			T.REFINE_ROADNM_ADDR, /* 소재지도로명주소 */
@@ -40,6 +40,8 @@
 			T.RE_BUILD_YM, /* 리모델링연월 */
 			T.DATA_STD_DE /* 데이터기준일자 */
 		FROM pub_toilet T
-		LIMIT 10;
-	</select>	
+		WHERE T.REFINE_WGS84_LAT BETWEEN #{slat} AND #{elat}
+		  AND T.REFINE_WGS84_LOGT BETWEEN #{slogt} AND #{elogt}
+
+	</select>
 </mapper>

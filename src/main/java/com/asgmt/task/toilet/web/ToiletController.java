@@ -4,13 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.gson.Gson;
+
 @Controller
 public class ToiletController {
 
 	@RequestMapping(value="/app/toilet", method = RequestMethod.GET)
 	public String index() {
-		
-		System.out.println("화장실 페이지");
+
+		System.out.println("화장실 페이지" );
 		return "toilet";
 	}
 }
