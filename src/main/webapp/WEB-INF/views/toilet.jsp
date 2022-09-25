@@ -57,7 +57,8 @@ function Info() {
 		marker = new Tmapv2.Marker({
 			position : lonlat, //Marker의 중심좌표 설정.
 			map : map, //Marker가 표시될 Map 설정.
-			title : title //Marker 타이틀.
+			title : title, //Marker 타이틀.
+			icon : "/static/img/icon.png"
 		});
 	}
 }
@@ -75,6 +76,28 @@ function getToiletList(event) {
 	})
 	return list;
 }
+
+// 내위치 구하기
+function getLocation() {
+	var gps;
+	if (navigator.geolocation) { // GPS를 지원하면
+		navigator.geolocation.getCurrentPosition(function (position) {
+			map.setCenter(new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude));
+			Info();
+		}, function (error) {
+			console.error(error);
+		}, {
+			enableHighAccuracy: false,
+			maximumAge: 0,
+			timeout: Infinity
+		});
+	} else {
+	alert('GPS를 지원하지 않습니다');
+	}
+}
+
+getLocation();
+
 </script>
 </head>
 <body onload="initTmap()">
