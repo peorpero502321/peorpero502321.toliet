@@ -1,0 +1,73 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;700&display=swap');
+
+/* reset ================= */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+ul,
+li,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* content ================= */
+
+#headBox {
+	height:30px;
+}
+
+#footBox {
+	height:60px;
+	overflow:hidden;
+	word-wrap:break-word;
+
+}
+
+/* footPopup ================*/
+#fixed-form-container{
+    position: fixed;
+    bottom: 0px;
+    left: 3%;
+    width: 94%;
+    text-align: center;
+    margin: 0;
+
+}
+
+#fixed-form-container .body{
+    background-color: #fff;
+    border-radius: 5px;
+    border: 2px solid #e25454;
+    margin-bottom: 16px;
+    padding: 10px;
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.3);
+}
+
+@media only screen and (min-width:768px){
+    #fixed-form-container .button{
+       margin: 0;
+
+    }
+    #fixed-form-container {
+        left: 20px;
+        width: 390px;
+        text-align: left;
+    }
+
+    #fixed-form-container .body{
+        padding: 30px;
+        border-radius: 0px 5px 5px 5px;
+    }
+}
