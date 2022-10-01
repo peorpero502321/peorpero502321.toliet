@@ -43,6 +43,7 @@
 		var map;
 		var event;
 		var marker;
+		var merker2; // user
 		var toiletList;
 		var toiletInfo;
 
@@ -74,6 +75,7 @@
 			var resultDiv = document.getElementById("footBox");
 			resultDiv.innerHTML = result;
 
+
 			toiletList = getToiletList(event);
 			var positions = [];
 			for (var z = 0; z< toiletList.length; z++) {
@@ -94,8 +96,7 @@
 					map : map, //Marker가 표시될 Map 설정.
 					title : title, //Marker 타이틀.
 					label : label, //Marker의 라벨.
-					icon : "/static/img/icon.png",
-
+					icon : "/static/img/toilet.png"
 				});
 
 				marker.addListener("touchstart", function (evt) {
@@ -135,6 +136,11 @@
 			if (navigator.geolocation) { // GPS를 지원하면
 				navigator.geolocation.getCurrentPosition(function (position) {
 					map.setCenter(new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude));
+					merker2 = new Tmapv2.Marker({
+						position : new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude),//좌표 지정, //Marker의 중심좌표 설정.
+						map : map, //Marker가 표시될 Map 설정.
+						icon : "/static/img/icon.png"
+					});
 					Info();
 				}, function (error) {
 					console.error(error);
