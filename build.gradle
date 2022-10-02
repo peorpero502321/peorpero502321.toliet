@@ -7,6 +7,7 @@ plugins {
 group = 'com.asgmt'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
+apply plugin: 'war'
 
 configurations {
 	compileOnly {
@@ -41,4 +42,8 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jar {
+    enabled = false
 }
