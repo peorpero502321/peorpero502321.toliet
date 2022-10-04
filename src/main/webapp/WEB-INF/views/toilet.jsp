@@ -58,6 +58,7 @@
 			map.setZoomLimit("15","17");
 			map.addListener("dragend", onDragend); // 지도 드래그 끝났을 때, 이벤트 리스너 등록.
 			map.addListener("touchend", onTouchend); // 모바일에서 지도 터치 터치가 끝났을때, 이벤트 리스너 등록.
+			map.setOptions({zoomControl:false});
 		}
 
 
@@ -166,8 +167,6 @@
 				}
 			}
 		}
-
-
 
 	</script>
 </body>
