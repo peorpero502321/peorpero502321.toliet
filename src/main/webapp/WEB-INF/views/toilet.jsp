@@ -20,18 +20,8 @@
 <section id="fixed-form-container">
 	<div class="box"></div>
 	<div class="body">
-		<div class="form-group">
-			<label for="email">Email address:</label>
-			<input type="email" class="form-control" id="email">
+		<div id="toilet-info">
 		</div>
-		<div class="form-group">
-			<label for="pwd">Password:</label>
-			<input type="password" class="form-control" id="pwd">
-		</div>
-		<div class="checkbox">
-			<label><input type="checkbox"> Remember me</label>
-		</div>
-		<button type="submit" class="btn btn-default">Submit</button>
 	</div>
 </section>
 
@@ -88,7 +78,7 @@
 				}
 			}
 
-			for (var i = 0; i< positions.length; i++){//for문을 통하여 배열 안에 있는 값을 마커 생성
+			for (var i = 0; i< positions.length; i++){//for문을 통하여 배열 안에 있는 값으로 마커 생성
 				var lonlat = positions[i].lonlat;
 				var title = positions[i].title;
 				label="<span style='background-color: #46414E;color:white'>"+title+"</span>";
@@ -101,18 +91,17 @@
 					icon : "/static/img/toilet.png"
 				});
 
-				marker.addListener("touchstart", function (evt) {
+				marker.addListener("touchend", function (evt) {
 					$(".box").next("#fixed-form-container div").slideToggle(400);
-					toiletInfo = getTolietObjectData(evt.latLng._lat, evt.latLng._lng);
-					console.log(marker.getPositionEPSG3857);
-					console.log(getTolietObjectData(evt.latLng._lat, evt.latLng._lng));
+					var ogj = "";
+					ogj = getToiletDtl(evt.latLng._lat, evt.latLng._lng);
+					console.log(JSON.stringify(ogj));
+					document.getElementById("toilet-info").innerHTML = JSON.stringify(ogj);
 				});
 
 				marker.addListener("click", function(evt) {
 					$(".box").next("#fixed-form-container div").slideToggle(400);
-					//toiletInfo = getTolietObjectData(evt.latLng._lat, evt.latLng._lng);
 					console.log(this.label);
-					//console.log(getTolietObjectData(evt.latLng._lat, evt.latLng._lng));
 				});
 			}
 
@@ -130,6 +119,20 @@
 				}
 			})
 			return list;
+		}
+
+		// 클릭마커 좌표로 데이터 조회
+		function getToiletDtl(lat, lng) {
+			var obj;
+			$.ajax({
+				url:'/api/toilet/dtl',
+				async: false,
+				data : {lat :lat, logt:lng},
+				success:function(data){
+					obj = data;
+				}
+			})
+			return obj;
 		}
 
 		// 내위치 구하기

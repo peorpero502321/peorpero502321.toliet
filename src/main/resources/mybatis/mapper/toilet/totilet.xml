@@ -6,7 +6,7 @@
 <mapper namespace="com.asgmt.task.toilet.dao.ToiletDao">
 
 	<!-- 조회 -->
-	<select id="selectToilet" parameterType="com.asgmt.task.toilet.vo.ToiletPVo"
+	<select id="selectToiletList" parameterType="com.asgmt.task.toilet.vo.ToiletPVo"
 	resultType="com.asgmt.task.toilet.vo.ToiletRVo">
 		SELECT
 			T.PUBLFACLT_DIV_NM, /* 구분 */
@@ -42,6 +42,43 @@
 		FROM pub_toilet T
 		WHERE T.REFINE_WGS84_LAT BETWEEN #{slat} AND #{elat}
 		  AND T.REFINE_WGS84_LOGT BETWEEN #{slogt} AND #{elogt}
+	</select>
 
+	<select id="selectToiletDtl" parameterType="com.asgmt.task.toilet.vo.ToiletDtlPVo"
+	resultType="com.asgmt.task.toilet.vo.ToiletDtlRVo">
+		SELECT
+			T.PUBLFACLT_DIV_NM, /* 구분 */
+			T.PBCTLT_PLC_NM, /* 화장실명 */
+			T.REFINE_ROADNM_ADDR, /* 소재지도로명주소 */
+			T.REFINE_LOTNO_ADDR, /* 소재지지번주소 */
+			T.MALE_FEMALE_CMNUSE_TOILET_YN, /* 남녀공용화장실여부 */
+			T.MALE_WTRCLS_CNT, /* 남성용-대변기수 */
+			T.MALE_UIL_CNT, /* 남성용-소변기수 */
+			T.MALE_DSPSN_WTRCLS_CNT, /* 남성용-장애인용대변기수 */
+			T.MALE_DSPSN_UIL_CNT, /* 남성용-장애인용소변기수 */
+			T.MALE_KID_WTRCLS_CNT, /* 남성용-어린이용대변기수 */
+			T.MALE_KID_UIL_CNT, /* 남성용-어린이용소변기수 */
+			T.FEMALE_WTRCLS_CNT, /* 여성용-대변기수 */
+			T.FEMALE_DSPSN_WTRCLS_CNT, /* 여성용-장애인용대변기수 */
+			T.FEMALE_KID_WTRCLS_CNT, /* 여성용-어린이용대변기수 */
+			T.MNGINST_NM, /* 관리기관명 */
+			T.MNGINST_TELNO, /* 전화번호 */
+			T.OPEN_TM_INFO, /* 개방시간 */
+			T.INSTL_YM, /* 설치연월 */
+			T.REFINE_WGS84_LAT, /* 위도 */
+			T.REFINE_WGS84_LOGT, /* 경도 */
+			T.TOILET_POSESN_DIV, /* 화장실소유구분 */
+			T.TOILET_INSTL_PLC_TYPE, /* 화장실설치장소유형 */
+			T.PROC_CONT, /* 오물처리방식 */
+			T.EMBEL_INSTL_YN, /* 비상벨설치여부 */
+			T.EMBEL_INSTL_PLC, /* 비상벨설치장소 */
+			T.TOILET_YN, /* 화장실여부 */
+			T.INSTL_YN, /* 설치여부 */
+			T.PLC_NM, /* 기저귀교환대장소 */
+			T.RE_BUILD_YM, /* 리모델링연월 */
+			T.DATA_STD_DE /* 데이터기준일자 */
+		FROM pub_toilet T
+		WHERE T.REFINE_WGS84_LAT LIKE CONCAT('%',#{lat},'%') AND T.REFINE_WGS84_LOGT LIKE CONCAT('%', #{logt}, '%')
+		LIMIT 0, 1
 	</select>
 </mapper>

@@ -10,7 +10,6 @@ public class ToiletController {
 	@RequestMapping(value="/app/toilet", method = RequestMethod.GET)
 	public String index() {
 
-		System.out.println("화장실 페이지" );
 		return "toilet";
 	}
 }

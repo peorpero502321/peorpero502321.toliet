@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asgmt.task.toilet.service.ToiletService;
+import com.asgmt.task.toilet.vo.ToiletDtlPVo;
+import com.asgmt.task.toilet.vo.ToiletDtlRVo;
 import com.asgmt.task.toilet.vo.ToiletPVo;
 import com.asgmt.task.toilet.vo.ToiletRVo;
-import com.google.gson.Gson;
 
 @RestController
 public class ToiletApiController {
@@ -18,10 +19,14 @@ public class ToiletApiController {
 	@Autowired
 	private ToiletService toilet;
 
+	// 지도 범위에따라서 목록조회
 	@RequestMapping(value="/api/toilet", method = RequestMethod.GET)
 	public List<ToiletRVo> selectToiletList(ToiletPVo paramVO) {
-		System.out.println(new Gson().toJson(paramVO));
-		System.out.println("화장실 페이지 호출 + data" + toilet.selectToiletList(paramVO));
 		return toilet.selectToiletList(paramVO);
+	}
+
+	@RequestMapping(value="/api/toilet/dtl", method = RequestMethod.GET)
+	public ToiletDtlRVo selectToiletDtl(ToiletDtlPVo paramVO) {
+		return toilet.selectToiletDtl(paramVO);
 	}
 }
