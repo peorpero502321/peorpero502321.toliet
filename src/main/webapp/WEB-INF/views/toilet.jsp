@@ -53,7 +53,8 @@
 				center: new Tmapv2.LatLng(37.566481622437934,126.98502302169841), // 지도 초기 좌표
 				width: "100%",
 				height: "500px",
-				zoom: 15
+				zoom: 15,
+				httpsMode: true
 			});
 			map.setZoomLimit("15","17");
 			map.addListener("dragend", onDragend); // 지도 드래그 끝났을 때, 이벤트 리스너 등록.
