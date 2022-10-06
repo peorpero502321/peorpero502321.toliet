@@ -21,6 +21,49 @@
 	<div class="box"></div>
 	<div class="body">
 		<div id="toilet-info">
+			<table>
+				<tr>
+					<th colspan="4">
+						<p id="pbctlt_PLC_NM" style="font-size: 19px; font-weight: bold;"></p>
+					</th>
+				</tr>
+				<tr>
+					<td class="tdHead">남자소변기</td>
+					<td id="male_UIL_CNT" class="tdContentCnt"></td>
+					<td class="tdHead">여자대변기</td>
+					<td id="female_WTRCLS_CNT" class="tdContentText"></td>
+				</tr>
+				<tr>
+					<td class="tdHead">남자대변기</td>
+					<td id="male_WTRCLS_CNT" class="tdContentCnt"></td>
+					<td class="tdHead">여자대변기(장)</td>
+					<td id="female_DSPSN_WTRCLS_CNT" class="tdContentText"></td>
+				</tr>
+				<tr>
+					<td class="tdHead">남자소변기(장)</td>
+					<td id="male_DSPSN_UIL_CNT" class="tdContentCnt"></td>
+					<td class="tdHead">여자대변기(아)</td>
+					<td id="female_KID_WTRCLS_CNT" class="tdContentText"></td>
+				</tr>
+				<tr>
+					<td class="tdHead">남자대변기(장)</td>
+					<td id="male_DSPSN_WTRCLS_CNT" class="tdContentCnt"></td>
+					<td class="tdHead">남여공용여부</td>
+					<td id="male_FEMALE_CMNUSE_TOILET_YN" class="tdContentText"></td>
+				</tr>
+				<tr>
+					<td class="tdHead">남자소변기(아)</td>
+					<td id="male_KID_UIL_CNT" class="tdContentCnt"></td>
+					<td class="tdHead">오픈시간</td>
+					<td id="open_TM_INFO" class="tdContentText"></td>
+				</tr>
+				<tr>
+					<td class="tdHead">남자대변기(아)</td>
+					<td id="male_KID_WTRCLS_CNT" class="tdContentCnt"></td>
+					<td class="tdHead">주소</td>
+					<td id="refine_LOTNO_ADDR" class="tdContentText"></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </section>
@@ -32,7 +75,6 @@
 
 		var map;
 		var event;
-		var marker;
 		var merker2; // user
 		var toiletList;
 		var toiletInfo;
@@ -49,9 +91,10 @@
 			map.setZoomLimit("15","17");
 			map.addListener("dragend", onDragend); // 지도 드래그 끝났을 때, 이벤트 리스너 등록.
 			map.addListener("touchend", onTouchend); // 모바일에서 지도 터치 터치가 끝났을때, 이벤트 리스너 등록.
+			map.addListener("dragstart", onDragstart); // 지도 드래그 시작시, 이벤트 리스너 등록.
+			map.addListener("touchstart", onTouchstart); // 모바일에서 지도 터치 시작시, 이벤트 리스너 등록.
 			map.setOptions({zoomControl:false});
 		}
-
 
 		function onDragend(e) {
 			Info();
@@ -59,14 +102,20 @@
 		function onTouchend(e) {
 			Info();
 		}
+		function onDragstart(e) {
+			$("#fixed-form-container .body").hide();
+		}
+		function onTouchstart(e) {
+			$("#fixed-form-container .body").hide();
+		}
 
 		function Info() {
 			event = map.getBounds();
 			var extent = map.getBounds();//map의 영역의 값
 			var result ='지도의 현재 영역값은'+extent+'입니다.';
 			var resultDiv = document.getElementById("footBox");
+			var markers = []; // 마커를 저장할 배열
 			resultDiv.innerHTML = result;
-
 
 			toiletList = getToiletList(event);
 			var positions = [];
@@ -78,31 +127,39 @@
 				}
 			}
 
-			for (var i = 0; i< positions.length; i++){//for문을 통하여 배열 안에 있는 값으로 마커 생성
+			//for문을 통하여 배열 안에 있는 값으로 마커 생성
+			for (var i = 0; i< positions.length; i++){
 				var lonlat = positions[i].lonlat;
 				var title = positions[i].title;
 				label="<span style='background-color: #46414E;color:white'>"+title+"</span>";
 				//Marker 객체 생성.
-				marker = new Tmapv2.Marker({
+				var marker = new Tmapv2.Marker({
 					position : lonlat, //Marker의 중심좌표 설정.
-					map : map, //Marker가 표시될 Map 설정.
 					title : title, //Marker 타이틀.
 					label : label, //Marker의 라벨.
 					icon : "/static/img/toilet.png"
 				});
-
 				marker.addListener("touchend", function (evt) {
+					$("#fixed-form-container .body").hide();
 					$(".box").next("#fixed-form-container div").slideToggle(400);
-					var ogj = "";
-					ogj = getToiletDtl(evt.latLng._lat, evt.latLng._lng);
-					console.log(JSON.stringify(ogj));
-					document.getElementById("toilet-info").innerHTML = JSON.stringify(ogj);
+					var obj = "";
+					obj = getToiletDtl(evt.latLng._lat, evt.latLng._lng);
+					console.log(evt.latLng._lat, evt.latLng._lng);
+					map.setCenter(new Tmapv2.LatLng(evt.latLng._lat, evt.latLng._lng));
+					setToiletInfo(obj);
 				});
 
 				marker.addListener("click", function(evt) {
+					$("#fixed-form-container .body").hide();
 					$(".box").next("#fixed-form-container div").slideToggle(400);
-					console.log(this.label);
+					var obj = "";
+					obj = getToiletDtl(evt.latLng._lat, evt.latLng._lng);
+					map.setCenter(new Tmapv2.LatLng(evt.latLng._lat, evt.latLng._lng));
+					setToiletInfo(obj);
 				});
+
+				marker.setMap(map); //Marker가 표시될 Map 설정.
+				markers.push(marker);
 			}
 
 		}
@@ -160,6 +217,23 @@
 		}
 
 		getLocation();
+
+		// popup 화장실 정보 바인딩
+		function setToiletInfo(obj) {
+			document.getElementById("pbctlt_PLC_NM").innerHTML = obj.pbctlt_PLC_NM;
+			document.getElementById("male_UIL_CNT").innerHTML = obj.male_UIL_CNT;
+			document.getElementById("female_WTRCLS_CNT").innerHTML = obj.female_WTRCLS_CNT;
+			document.getElementById("male_WTRCLS_CNT").innerHTML = obj.male_WTRCLS_CNT;
+			document.getElementById("female_DSPSN_WTRCLS_CNT").innerHTML = obj.female_DSPSN_WTRCLS_CNT;
+			document.getElementById("male_DSPSN_UIL_CNT").innerHTML = obj.male_DSPSN_UIL_CNT;
+			document.getElementById("female_KID_WTRCLS_CNT").innerHTML = obj.female_KID_WTRCLS_CNT;
+			document.getElementById("male_DSPSN_WTRCLS_CNT").innerHTML = obj.male_DSPSN_WTRCLS_CNT;
+			document.getElementById("male_FEMALE_CMNUSE_TOILET_YN").innerHTML = obj.male_FEMALE_CMNUSE_TOILET_YN;
+			document.getElementById("male_KID_UIL_CNT").innerHTML = obj.male_KID_UIL_CNT;
+			document.getElementById("open_TM_INFO").innerHTML = obj.open_TM_INFO;
+			document.getElementById("male_KID_WTRCLS_CNT").innerHTML = obj.male_KID_WTRCLS_CNT;
+			document.getElementById("refine_LOTNO_ADDR").innerHTML = obj.refine_LOTNO_ADDR;
+		}
 
 		function getTolietObjectData(lat, logt) {
 			console.log(lat, logt);

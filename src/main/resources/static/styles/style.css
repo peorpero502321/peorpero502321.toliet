@@ -22,6 +22,22 @@ a {
 
 /* content ================= */
 
+.tdHead {
+	font-size: 14px;
+	font-weight: bold;
+	width : 32%;
+	text-align: left
+}
+
+.tdContentCnt {
+	font-size: 14px;
+	width : 6%;
+}
+.tdContentText {
+	font-size: 14px;
+	width : 30%;
+}
+
 #headBox {
 	height:30px;
 }

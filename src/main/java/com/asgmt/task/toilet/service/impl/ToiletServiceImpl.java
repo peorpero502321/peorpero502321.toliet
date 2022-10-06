@@ -29,8 +29,8 @@ public class ToiletServiceImpl implements ToiletService{
 		String strLogt = paramVO.getLogt();
 		String[] lstLat = strLat.split("\\.");
 		String[] lstLogt = strLogt.split("\\.");
-		paramVO.setLat(lstLat[0] + "." +lstLat[1].substring(0, 6));
-		paramVO.setLogt(lstLogt[0] + "." + lstLogt[1].substring(0, 6));
+		paramVO.setLat(lstLat[0] + "." +lstLat[1].substring(0, 5));
+		paramVO.setLogt(lstLogt[0] + "." + lstLogt[1].substring(0, 5));
 		return toilet.selectToiletDtl(paramVO);
 	}
 
