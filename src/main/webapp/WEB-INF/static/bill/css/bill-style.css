@@ -7,6 +7,24 @@
 	height: 100px;
 	background-color: cadetblue;
 }
+.tdMain {
+	width: 70%;
+	height: 100%;
+	float: left;
+}
+.tdPlus {
+	float: right;
+	width: 30%;
+	height: 50%;
+	background-color: aliceblue;
+}
+
+.tdManus {
+	height: 50%;
+	float: right;
+	width: 30%;
+	background-color: darkred;
+}
 
 * {
 	margin: 0;

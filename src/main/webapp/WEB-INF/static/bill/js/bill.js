@@ -39,10 +39,23 @@ function drowTable(table, list) {
 			for (z; z <= i; z++) {
 				if (z < list.length) {
 					var crTd = document.createElement('td');
-					crTd.appendChild(document.createTextNode('td' + list[z]));
+					var tdMain = document.createElement('div');
+					var tdPlus = document.createElement('div');
+					var tdManus = document.createElement('div');
+					tdMain.setAttribute('class', 'tdMain');
+					tdPlus.setAttribute('class', 'tdPlus');
+					tdManus.setAttribute('class', 'tdManus');
+					tdPlus.setAttribute('data-cost', list[z]);
+					tdManus.setAttribute('data-cost', list[z]);
+					tdMain.appendChild(document.createTextNode('td' + list[z]));
+					tdPlus.setAttribute('onclick', 'plusCost(this)');
+					tdManus.setAttribute('onclick', 'manusCost(this)');
+					crTd.appendChild(tdMain);
+					crTd.appendChild(tdPlus);
+					crTd.appendChild(tdManus);
+
 					crTd.setAttribute('id', 'menu');
-					crTd.setAttribute('data-cost', list[z]);
-					crTd.setAttribute('onclick', 'sellCost(this)');
+
 					crTr.appendChild(crTd);
 				}
 			}
@@ -51,13 +64,48 @@ function drowTable(table, list) {
 	}
 }
 
-function sellCost(thisTr) {
+// 금액계산
+function plusCost(thisDiv) {
 	var totalCost = document.getElementById('totalCost');
 	var plusCost = 0;
+	var tableCost =
+		thisDiv.parentNode.parentNode.parentNode.parentNode.querySelector(
+			'.totalCost'
+		);
+
 	plusCost =
-		parseInt(totalCost.innerHTML) + parseInt(thisTr.getAttribute('data-cost'));
-	totalCost.innerHTML = plusCost;
-	console.log(plusCost);
+		parseInt(tableCost.value) + parseInt(thisDiv.getAttribute('data-cost'));
+
+	tableCost.value = plusCost;
+	totalCost.innerHTML = tableCost.value;
+}
+
+function manusCost(thisDiv) {
+	var totalCost = document.getElementById('totalCost');
+	var plusCost = 0;
+	var tableCost =
+		thisDiv.parentNode.parentNode.parentNode.parentNode.querySelector(
+			'.totalCost'
+		);
+
+	plusCost =
+		parseInt(tableCost.value) - parseInt(thisDiv.getAttribute('data-cost'));
+
+	if (plusCost < 0) {
+		plusCost = 0;
+	}
+
+	tableCost.value = plusCost;
+	totalCost.innerHTML = tableCost.value;
+}
+//테이블 별 금액노출
+function getTableCost(thisTable) {
+	var tableCost = document
+		.getElementById(thisTable)
+		.querySelector('.totalCost');
+	var totalCost = document.getElementById('totalCost');
+
+	totalCost.innerHTML = tableCost.value;
 }
 
 //data 통신으로 table 호출

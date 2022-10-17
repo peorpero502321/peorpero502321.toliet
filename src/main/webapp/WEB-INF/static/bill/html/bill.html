@@ -6,50 +6,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>bill</title>
-    <link href="/css/bill-style.css" rel="stylesheet" type="text/css">
+    <link href="../css/bill-style.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
 
   <body>
     <div class="wrap">
-      <p id="totalCost">0</p>
+      TOTAL : <span id="totalCost">0</span> <span style="float: right;"><button>초기화</button></span>
       <div class="tab_menu">
         <ul class="list">
           <li class="is_on">
-            <a href="#tab1" class="btn">Tab Button1</a>
+            <a href="#tab1" class="btn" onclick="getTableCost('tab1')">Tab Button1</a>
           </li>
           <li>
-            <a href="#tab2" class="btn">Tab Button2</a>
+            <a href="#tab2" class="btn" onclick="getTableCost('tab2')">Tab Button2</a>
           </li>
           <li>
-            <a href="#tab3" class="btn">Tab Button3</a>
+            <a href="#tab3" class="btn" onclick="getTableCost('tab3')">Tab Button3</a>
           </li>
           <li>
-            <a href="#tab4" class="btn">Tab Button4</a>
+            <a href="#tab4" class="btn" onclick="getTableCost('tab4')">Tab Button4</a>
           </li>
         </ul>
 
         <div class="cont_area">
           <div id="tab1" class="cont" style="display:block;">
+            <input type="hidden" class="totalCost" value="0">
             <table id="crTable" class="crTClass">
             </table>
           </div>
           <div id="tab2" class="cont">
+            <input type="hidden" class="totalCost" value="0">
             <table id="crTable" class="crTClass">
             </table>
           </div>
           <div id="tab3" class="cont">
+            <input type="hidden" class="totalCost" value="0">
             <table id="crTable" class="crTClass">
             </table>
           </div>
           <div id="tab4" class="cont">
+            <input type="hidden" class="totalCost" value="0">
             <table id="crTable" class="crTClass">
             </table>
           </div>
         </div>
       </div>
     </div>
-    <script src="/js/bill.js"></script>
+    <script src="../js/bill.js"></script>
   </body>
 
   </html>
