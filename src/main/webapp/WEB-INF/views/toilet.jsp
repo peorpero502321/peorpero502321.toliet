@@ -130,11 +130,13 @@
 
 			toiletList = getToiletList(event);
 			var positions = [];
-			for (var z = 0; z< toiletList.length; z++) {
-				positions[z] = {
-					title: toiletList[z].pbctlt_PLC_NM,
-					lonlat: new Tmapv2.LatLng(toiletList[z].refine_WGS84_LAT, toiletList[z].refine_WGS84_LOGT),//좌표 지정
-					add : toiletList[z].REFINE_ROADNM_ADDR
+			if (null != toiletList) {
+				for (var z = 0; z< toiletList.length; z++) {
+					positions[z] = {
+						title: toiletList[z].pbctlt_PLC_NM,
+						lonlat: new Tmapv2.LatLng(toiletList[z].refine_WGS84_LAT, toiletList[z].refine_WGS84_LOGT),//좌표 지정
+						add : toiletList[z].REFINE_ROADNM_ADDR
+					}
 				}
 			}
 
