@@ -25,8 +25,13 @@ public class ToiletApiController {
 		return toilet.selectToiletList(paramVO);
 	}
 
+	// 클릭시 상세 화장실 정보 조회
 	@RequestMapping(value="/api/toilet/dtl", method = RequestMethod.GET)
 	public ToiletDtlRVo selectToiletDtl(ToiletDtlPVo paramVO) {
 		return toilet.selectToiletDtl(paramVO);
+	}
+	@RequestMapping(value="/api/toilet/close", method = RequestMethod.GET)
+	public ToiletDtlRVo selectCloseToiletDtl(ToiletDtlPVo paramVO) {
+		return toilet.selectCloseToiletDtl(paramVO);
 	}
 }

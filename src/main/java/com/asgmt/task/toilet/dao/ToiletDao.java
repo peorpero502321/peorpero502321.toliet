@@ -19,4 +19,7 @@ public interface ToiletDao {
 
 	// 마커 좌표 기준 데이터 조회
 	public ToiletDtlRVo selectToiletDtl(ToiletDtlPVo paramVO);
+
+	// 좌표 값과 가까운 화장실 데이터 조회
+	public ToiletDtlRVo selectCloseToiletDtl(ToiletDtlPVo paramVO);
 }

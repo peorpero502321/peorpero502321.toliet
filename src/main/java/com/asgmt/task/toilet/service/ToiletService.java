@@ -12,4 +12,6 @@ public interface ToiletService {
 	public List<ToiletRVo> selectToiletList(ToiletPVo paramVO);
 
 	public ToiletDtlRVo selectToiletDtl(ToiletDtlPVo paramVO);
+
+	public ToiletDtlRVo selectCloseToiletDtl(ToiletDtlPVo paramVO);
 }

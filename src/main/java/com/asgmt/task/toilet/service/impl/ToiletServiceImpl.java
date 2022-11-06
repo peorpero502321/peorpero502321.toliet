@@ -11,6 +11,7 @@ import com.asgmt.task.toilet.vo.ToiletDtlPVo;
 import com.asgmt.task.toilet.vo.ToiletDtlRVo;
 import com.asgmt.task.toilet.vo.ToiletPVo;
 import com.asgmt.task.toilet.vo.ToiletRVo;
+import com.google.gson.Gson;
 
 @Service
 public class ToiletServiceImpl implements ToiletService{
@@ -31,7 +32,13 @@ public class ToiletServiceImpl implements ToiletService{
 		String[] lstLogt = strLogt.split("\\.");
 		paramVO.setLat(lstLat[0] + "." +lstLat[1].substring(0, 5));
 		paramVO.setLogt(lstLogt[0] + "." + lstLogt[1].substring(0, 5));
+		System.out.println(":: " + new Gson().toJson(paramVO));
 		return toilet.selectToiletDtl(paramVO);
+	}
+
+	@Override
+	public ToiletDtlRVo selectCloseToiletDtl(ToiletDtlPVo paramVO) {
+		return toilet.selectCloseToiletDtl(paramVO);
 	}
 
 }

@@ -15,7 +15,19 @@
 <div id="headBox"></div>
 <div id="map_div"></div>
 <p id="result" />
-<div id="footBox"></div>
+<div id="footBox">
+	<table style="width:100%; height: 60px;">
+		<tr>
+			<th class="taget_button">
+				<button onclick="getLocation();">내 위치로</button>
+			</th>
+			<th class="taget_button">
+				<button onclick="getMyCloseToilet()">가장가까운 화장실로</button>
+			</th>
+		<tr>
+	</table>
+
+</div>
 
 <section id="fixed-form-container">
 	<div class="box"></div>
@@ -75,7 +87,6 @@
 
 		var map;
 		var event;
-		var merker2; // user
 		var toiletList;
 		var toiletInfo;
 
@@ -97,25 +108,25 @@
 		}
 
 		function onDragend(e) {
-			Info();
+			info();
 		}
 		function onTouchend(e) {
-			Info();
+			info();
 		}
 		function onDragstart(e) {
 			$("#fixed-form-container .body").hide();
+			$(".taget_button").children('button').css('background-color', '#eee');
 		}
 		function onTouchstart(e) {
 			$("#fixed-form-container .body").hide();
+			$(".taget_button").children('button').css('background-color', '#eee');
 		}
 
-		function Info() {
+		function info() {
 			event = map.getBounds();
 			var extent = map.getBounds();//map의 영역의 값
 			var result ='지도의 현재 영역값은'+extent+'입니다.';
-			var resultDiv = document.getElementById("footBox");
 			var markers = []; // 마커를 저장할 배열
-			resultDiv.innerHTML = result;
 
 			toiletList = getToiletList(event);
 			var positions = [];
@@ -137,7 +148,7 @@
 					position : lonlat, //Marker의 중심좌표 설정.
 					title : title, //Marker 타이틀.
 					label : label, //Marker의 라벨.
-					icon : "/static/img/toilet.png"
+					icon : "/static/img/toilet.gif"
 				});
 				marker.addListener("touchend", function (evt) {
 					$("#fixed-form-container .body").hide();
@@ -192,18 +203,32 @@
 			return obj;
 		}
 
+		// 좌표의 근사치 화장실 정보 조회
+		function getToiletCloseDtl(lat, lng) {
+			var obj;
+			$.ajax({
+				url:'/api/toilet/close',
+				async: false,
+				data : {lat :lat, logt:lng},
+				success:function(data){
+					obj = data;
+				}
+			})
+			return obj;
+		}
+
 		// 내위치 구하기
 		function getLocation() {
 			var gps;
 			if (navigator.geolocation) { // GPS를 지원하면
 				navigator.geolocation.getCurrentPosition(function (position) {
 					map.setCenter(new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude));
-					merker2 = new Tmapv2.Marker({
-						position : new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude),//좌표 지정, //Marker의 중심좌표 설정.
+					var merker2 = new Tmapv2.Marker({
+						position : new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude),//좌표 지정, Marker의 중심좌표 설정.
 						map : map, //Marker가 표시될 Map 설정.
 						icon : "/static/img/icon.png"
 					});
-					Info();
+					info();
 				}, function (error) {
 					console.error(error);
 				}, {
@@ -214,6 +239,38 @@
 			} else {
 			alert('GPS를 지원하지 않습니다');
 			}
+		}
+
+		// 내위치와 가장가까운 화장실로 이동
+		function getMyCloseToilet() {
+			var gps;
+			console.log(navigator.geolocation);
+			if (navigator.geolocation) { // GPS를 지원하면
+				navigator.geolocation.getCurrentPosition(function (position) {
+
+					// 내위치 좌표로 인접 화장실 1개 뽑고 db 조회 obj 반환
+					var toiletObj = getMyCloseToiletCrdnt(position.coords.latitude, position.coords.longitude);
+
+					if (null != toiletObj) {
+						setToiletInfo(toiletObj);
+					}
+					console.log(toiletObj);
+					// 해당위치 센터로 이동 시키면 됨
+					map.setCenter(new Tmapv2.LatLng(toiletObj.refine_WGS84_LAT ,toiletObj.refine_WGS84_LOGT));
+					info();
+				}, function (error) {
+					console.error(error);
+				}, {
+					enableHighAccuracy: false,
+					maximumAge: 0,
+					timeout: Infinity
+				});
+			} else {
+			alert('GPS를 지원하지 않습니다');
+			}
+
+			$("#fixed-form-container .body").hide();
+			$(".box").next("#fixed-form-container div").slideToggle(400);
 		}
 
 		getLocation();
@@ -235,9 +292,48 @@
 			document.getElementById("refine_LOTNO_ADDR").innerHTML = obj.refine_LOTNO_ADDR;
 		}
 
-		function getTolietObjectData(lat, logt) {
-			console.log(lat, logt);
+		var chackList = [];
 
+		// 가까운 화장실정보 반환 X
+		/* script 버전임 DB조회 버전으로 변경
+		function getMyCloseToiletCrdnt(lat, logt) {
+			for (var i = 0; i < toiletList.length; i++) {
+
+				var chkLat = 0;
+				var chkLogt = 0;
+				chkLat = Math.abs(toiletList[i].refine_WGS84_LAT - lat);
+				chkLogt = Math.abs(toiletList[i].refine_WGS84_LOGT - logt);
+				chackList[i] = chkLat + chkLogt;
+				console.log(chackList[i]);
+			}
+			console.log();
+			return toiletList[getMinIndex(chackList)];
+		} */
+
+
+		// 가까운 화장실정보 반환 DB조회
+		function getMyCloseToiletCrdnt(lat, logt) {
+
+			return getToiletCloseDtl(lat, logt);
+		}
+
+		// 최소값 인덱스 구하기
+		function getMinIndex(lst) {
+
+			// 최소값 인덱스 초기값 세팅
+			var min = lst[0];
+			var minIndex = 0;
+
+			// 최소값의 인덱스 구하기
+			for (var i = 0; i < lst.length; i++) {
+				if (lst[i] < min) {
+					minIndex = i;
+				}
+			}
+			return minIndex;
+		}
+
+		function getTolietObjectData(lat, logt) {
 			for (var i = 0; i < toiletList.length; i++) {
 				if (toiletList[i].refine_WGS84_LAT == lat && toiletList[i].refine_WGS84_LOGT == logt ) {
 					console.log(toiletList[i]);
@@ -245,6 +341,8 @@
 				}
 			}
 		}
+
+
 
 	</script>
 </body>
