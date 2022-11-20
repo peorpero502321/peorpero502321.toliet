@@ -89,6 +89,8 @@
 		var event;
 		var toiletList;
 		var toiletInfo;
+		var merker2;
+		var myMerkers = [];
 
 		function initTmap(){
 			map = new Tmapv2.Map("map_div",
@@ -150,7 +152,7 @@
 					position : lonlat, //Marker의 중심좌표 설정.
 					title : title, //Marker 타이틀.
 					label : label, //Marker의 라벨.
-					icon : "/static/img/toilet.gif"
+					icon : "/static/img/toilet.png"
 				});
 				marker.addListener("touchend", function (evt) {
 					$("#fixed-form-container .body").hide();
@@ -224,12 +226,17 @@
 			var gps;
 			if (navigator.geolocation) { // GPS를 지원하면
 				navigator.geolocation.getCurrentPosition(function (position) {
+
+					delMyMerker(); // 내위치 마커 지우기
+
 					map.setCenter(new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude));
-					var merker2 = new Tmapv2.Marker({
+					merker2 = new Tmapv2.Marker({
 						position : new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude),//좌표 지정, Marker의 중심좌표 설정.
 						map : map, //Marker가 표시될 Map 설정.
 						icon : "/static/img/icon.png"
 					});
+
+					myMerkers.push(merker2);
 					info();
 				}, function (error) {
 					console.error(error);
@@ -241,6 +248,15 @@
 			} else {
 			alert('GPS를 지원하지 않습니다');
 			}
+		}
+
+		// 내위치 마커 지우기
+		function delMyMerker() {
+			for (var i = 0; i < myMerkers.length; i++) {
+				myMerkers[i].setMap(null);
+			}
+			myMerkers = [];
+
 		}
 
 		// 내위치와 가장가까운 화장실로 이동
