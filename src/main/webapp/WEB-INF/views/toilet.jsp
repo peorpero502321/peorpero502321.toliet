@@ -40,40 +40,74 @@
 					</th>
 				</tr>
 				<tr>
-					<td class="tdHead">남자소변기</td>
+					<td class="tdHead">
+						<img src="/static/img/male.png" alt="남자">
+						<img src="/static/img/uil.png" alt="소변기">
+					</td>
 					<td id="male_UIL_CNT" class="tdContentCnt"></td>
-					<td class="tdHead">여자대변기</td>
+					<td class="tdHead">
+						<img src="/static/img/female.png" alt="여자">
+						<img src="/static/img/wtrcls.png" alt="대변기">
+					</td>
 					<td id="female_WTRCLS_CNT" class="tdContentText"></td>
 				</tr>
 				<tr>
-					<td class="tdHead">남자대변기</td>
+					<td class="tdHead">
+						<img src="/static/img/male.png" alt="남자">
+						<img src="/static/img/wtrcls.png" alt="대변기">
+					</td>
 					<td id="male_WTRCLS_CNT" class="tdContentCnt"></td>
-					<td class="tdHead">여자대변기(장)</td>
+					<td class="tdHead">
+						<img src="/static/img/female.png" alt="여자">
+						<img src="/static/img/wtrcls.png" alt="대변기">
+						<img src="/static/img/dspsn.png" alt="장애인">
+					</td>
 					<td id="female_DSPSN_WTRCLS_CNT" class="tdContentText"></td>
 				</tr>
 				<tr>
-					<td class="tdHead">남자소변기(장)</td>
+					<td class="tdHead">
+						<img src="/static/img/male.png" alt="남자">
+						<img src="/static/img/uil.png" alt="소변기">
+						<img src="/static/img/dspsn.png" alt="장애인">
+					</td>
 					<td id="male_DSPSN_UIL_CNT" class="tdContentCnt"></td>
-					<td class="tdHead">여자대변기(아)</td>
+					<td class="tdHead">
+						<img src="/static/img/femaleKid.png" alt="여자아이">
+						<img src="/static/img/wtrcls.png" alt="대변기">
+					</td>
 					<td id="female_KID_WTRCLS_CNT" class="tdContentText"></td>
 				</tr>
 				<tr>
-					<td class="tdHead">남자대변기(장)</td>
+					<td class="tdHead">
+						<img src="/static/img/male.png" alt="남자">
+						<img src="/static/img/wtrcls.png" alt="대변기">
+						<img src="/static/img/dspsn.png" alt="장애인">
+					</td>
 					<td id="male_DSPSN_WTRCLS_CNT" class="tdContentCnt"></td>
-					<td class="tdHead">남여공용여부</td>
+					<td class="tdHead">
+						<img src="/static/img/toilet.png" alt="남여공용">
+					</td>
 					<td id="male_FEMALE_CMNUSE_TOILET_YN" class="tdContentText"></td>
 				</tr>
 				<tr>
-					<td class="tdHead">남자소변기(아)</td>
+					<td class="tdHead">
+						<img src="/static/img/maleKid.png" alt="남자아이">
+						<img src="/static/img/uil.png" alt="소변기">
+					</td>
 					<td id="male_KID_UIL_CNT" class="tdContentCnt"></td>
-					<td class="tdHead">오픈시간</td>
-					<td id="open_TM_INFO" class="tdContentText"></td>
+					<td class="tdHead">
+						<img src="/static/img/maleKid.png" alt="남자아이">
+						<img src="/static/img/wtrcls.png" alt="대변기">
+					</td>
+					<td id="male_KID_WTRCLS_CNT" class="tdContentCnt"></td>
 				</tr>
 				<tr>
-					<td class="tdHead">남자대변기(아)</td>
-					<td id="male_KID_WTRCLS_CNT" class="tdContentCnt"></td>
+					<td class="tdHead">오픈시간</td>
+					<td id="open_TM_INFO" colspan="3" class="tdContentText"></td>
+				</tr>
+				<tr>
 					<td class="tdHead">주소</td>
-					<td id="refine_LOTNO_ADDR" class="tdContentText"></td>
+					<td id="refine_LOTNO_ADDR" colspan="3" class="tdContentText"></td>
 				</tr>
 			</table>
 		</div>
@@ -159,7 +193,6 @@
 					$(".box").next("#fixed-form-container div").slideToggle(400);
 					var obj = "";
 					obj = getToiletDtl(evt.latLng._lat, evt.latLng._lng);
-					console.log(evt.latLng._lat, evt.latLng._lng);
 					map.setCenter(new Tmapv2.LatLng(evt.latLng._lat, evt.latLng._lng));
 					setToiletInfo(obj);
 				});
@@ -262,7 +295,6 @@
 		// 내위치와 가장가까운 화장실로 이동
 		function getMyCloseToilet() {
 			var gps;
-			console.log(navigator.geolocation);
 			if (navigator.geolocation) { // GPS를 지원하면
 				navigator.geolocation.getCurrentPosition(function (position) {
 
@@ -272,7 +304,6 @@
 					if (null != toiletObj) {
 						setToiletInfo(toiletObj);
 					}
-					console.log(toiletObj);
 					// 해당위치 센터로 이동 시키면 됨
 					map.setCenter(new Tmapv2.LatLng(toiletObj.refine_WGS84_LAT ,toiletObj.refine_WGS84_LOGT));
 					info();
@@ -354,7 +385,6 @@
 		function getTolietObjectData(lat, logt) {
 			for (var i = 0; i < toiletList.length; i++) {
 				if (toiletList[i].refine_WGS84_LAT == lat && toiletList[i].refine_WGS84_LOGT == logt ) {
-					console.log(toiletList[i]);
 					return toiletList[i];
 				}
 			}
