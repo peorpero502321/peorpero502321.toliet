@@ -11,18 +11,18 @@
 	<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xxe313b66ead5248d2bbf5f3c810b0afd2"></script>
 
 </head>
-<body onload="initTmap()">
+<body onload="initTmap()" style="background-color:#a3a3a3">
 <div id="headBox"></div>
 <div id="map_div"></div>
 <p id="result" />
 <div id="footBox">
-	<table style="width:100%; height: 60px;">
+	<table style="width:100%; height: 80px;">
 		<tr>
 			<th class="taget_button">
-				<button onclick="getLocation();">내 위치로</button>
+				<button onclick="getLocation();"><b>내 위치로</b></button>
 			</th>
 			<th class="taget_button">
-				<button onclick="getMyCloseToilet()">가장가까운 화장실로</button>
+				<button onclick="getMyCloseToilet()"><b>가장 가까운 화장실로</b></button>
 			</th>
 		<tr>
 	</table>
@@ -35,7 +35,7 @@
 		<div id="toilet-info">
 			<table>
 				<tr>
-					<th colspan="4">
+					<th colspan="5">
 						<p id="pbctlt_PLC_NM" style="font-size: 19px; font-weight: bold;"></p>
 					</th>
 				</tr>
@@ -131,7 +131,7 @@
 			{
 				center: new Tmapv2.LatLng(37.566481622437934,126.98502302169841), // 지도 초기 좌표
 				width: "100%",
-				height: "500px",
+				height: "700px",
 				zoom: 15,
 				httpsMode: true
 			});
@@ -151,11 +151,11 @@
 		}
 		function onDragstart(e) {
 			$("#fixed-form-container .body").hide();
-			$(".taget_button").children('button').css('background-color', '#eee');
+			$(".taget_button").children('button').css('background-color', '#a3a3a3');
 		}
 		function onTouchstart(e) {
 			$("#fixed-form-container .body").hide();
-			$(".taget_button").children('button').css('background-color', '#eee');
+			$(".taget_button").children('button').css('background-color', '#a3a3a3');
 		}
 
 		function info() {
@@ -180,7 +180,7 @@
 			for (var i = 0; i< positions.length; i++){
 				var lonlat = positions[i].lonlat;
 				var title = positions[i].title;
-				label="<span style='background-color: #46414E;color:white'>"+title+"</span>";
+				label="<span style='color:#000000'>"+title+"</span>";
 				//Marker 객체 생성.
 				var marker = new Tmapv2.Marker({
 					position : lonlat, //Marker의 중심좌표 설정.

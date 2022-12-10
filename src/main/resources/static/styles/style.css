@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;700&display=swap');
+@import './reset.css';
 
 /* reset ================= */
 
@@ -53,18 +54,18 @@ a {
 #fixed-form-container{
     position: fixed;
     bottom: 0px;
-    left: 3%;
-    width: 94%;
+    width: 100%;
     text-align: center;
     margin: 0;
 
 }
 
 #fixed-form-container .body{
-    background-color: #fff;
+    background-color: #a3a3a3;
     border-radius: 5px;
-    border: 2px solid #e25454;
+    border: 2px solid #a3a3a3;
     margin-bottom: 16px;
+    color: #ffffff;
     padding: 10px;
     -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.3);
     -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.3);
@@ -94,9 +95,11 @@ a {
 .taget_button > button {
   width: 100%;
   height: 100%;
+  font-size: 130%;
   cursor: pointer;
   outline: none;
-  background-color: #eee;
+  background-color: #a3a3a3;
+  color: #ffffff;
   box-shadow: 1px 4px 0 rgb(0,0,0,0.5);
 }
 
