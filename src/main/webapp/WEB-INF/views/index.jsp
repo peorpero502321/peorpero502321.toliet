@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-한글깨짐 수정완료쓰 !!!!
+index
 </body>
 </html>
