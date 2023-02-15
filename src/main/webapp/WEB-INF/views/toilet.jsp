@@ -36,7 +36,7 @@
 			<table>
 				<tr>
 					<th colspan="5">
-						<p id="pbctlt_PLC_NM" style="font-size: 19px; font-weight: bold;"></p>
+						<p id="pbctltPlcNm" style="font-size: 19px; font-weight: bold;"></p>
 					</th>
 				</tr>
 				<tr>
@@ -44,25 +44,25 @@
 						<img src="/static/img/male.png" alt="남자">
 						<img src="/static/img/uil.png" alt="소변기">
 					</td>
-					<td id="male_UIL_CNT" class="tdContentCnt"></td>
+					<td id="maleUilCnt" class="tdContentCnt"></td>
 					<td class="tdHead">
 						<img src="/static/img/female.png" alt="여자">
 						<img src="/static/img/wtrcls.png" alt="대변기">
 					</td>
-					<td id="female_WTRCLS_CNT" class="tdContentText"></td>
+					<td id="femaleWtrclsCnt" class="tdContentText"></td>
 				</tr>
 				<tr>
 					<td class="tdHead">
 						<img src="/static/img/male.png" alt="남자">
 						<img src="/static/img/wtrcls.png" alt="대변기">
 					</td>
-					<td id="male_WTRCLS_CNT" class="tdContentCnt"></td>
+					<td id="maleWtrclsCnt" class="tdContentCnt"></td>
 					<td class="tdHead">
 						<img src="/static/img/female.png" alt="여자">
 						<img src="/static/img/wtrcls.png" alt="대변기">
 						<img src="/static/img/dspsn.png" alt="장애인">
 					</td>
-					<td id="female_DSPSN_WTRCLS_CNT" class="tdContentText"></td>
+					<td id="femaleDspsnWtrclsCnt" class="tdContentText"></td>
 				</tr>
 				<tr>
 					<td class="tdHead">
@@ -70,12 +70,12 @@
 						<img src="/static/img/uil.png" alt="소변기">
 						<img src="/static/img/dspsn.png" alt="장애인">
 					</td>
-					<td id="male_DSPSN_UIL_CNT" class="tdContentCnt"></td>
+					<td id="maleDspsnUilCnt" class="tdContentCnt"></td>
 					<td class="tdHead">
 						<img src="/static/img/femaleKid.png" alt="여자아이">
 						<img src="/static/img/wtrcls.png" alt="대변기">
 					</td>
-					<td id="female_KID_WTRCLS_CNT" class="tdContentText"></td>
+					<td id="femaleKidWtrclsCnt" class="tdContentText"></td>
 				</tr>
 				<tr>
 					<td class="tdHead">
@@ -83,31 +83,31 @@
 						<img src="/static/img/wtrcls.png" alt="대변기">
 						<img src="/static/img/dspsn.png" alt="장애인">
 					</td>
-					<td id="male_DSPSN_WTRCLS_CNT" class="tdContentCnt"></td>
+					<td id="maleDspsnWtrclsCnt" class="tdContentCnt"></td>
 					<td class="tdHead">
 						<img src="/static/img/toilet.png" alt="남여공용">
 					</td>
-					<td id="male_FEMALE_CMNUSE_TOILET_YN" class="tdContentText"></td>
+					<td id="maleFemaleCmnuseToiletYn" class="tdContentText"></td>
 				</tr>
 				<tr>
 					<td class="tdHead">
 						<img src="/static/img/maleKid.png" alt="남자아이">
 						<img src="/static/img/uil.png" alt="소변기">
 					</td>
-					<td id="male_KID_UIL_CNT" class="tdContentCnt"></td>
+					<td id="maleKidUilCnt" class="tdContentCnt"></td>
 					<td class="tdHead">
 						<img src="/static/img/maleKid.png" alt="남자아이">
 						<img src="/static/img/wtrcls.png" alt="대변기">
 					</td>
-					<td id="male_KID_WTRCLS_CNT" class="tdContentCnt"></td>
+					<td id="maleKidWtrclsCnt" class="tdContentCnt"></td>
 				</tr>
 				<tr>
 					<td class="tdHead">오픈시간</td>
-					<td id="open_TM_INFO" colspan="3" class="tdContentText"></td>
+					<td id="openTmInfo" colspan="3" class="tdContentText"></td>
 				</tr>
 				<tr>
 					<td class="tdHead">주소</td>
-					<td id="refine_LOTNO_ADDR" colspan="3" class="tdContentText"></td>
+					<td id="refineLotnoAddr" colspan="3" class="tdContentText"></td>
 				</tr>
 			</table>
 		</div>
@@ -169,9 +169,9 @@
 			if (null != toiletList) {
 				for (var z = 0; z< toiletList.length; z++) {
 					positions[z] = {
-						title: toiletList[z].pbctlt_PLC_NM,
-						lonlat: new Tmapv2.LatLng(toiletList[z].refine_WGS84_LAT, toiletList[z].refine_WGS84_LOGT),//좌표 지정
-						add : toiletList[z].REFINE_ROADNM_ADDR
+						title: toiletList[z].pbctltPlcNm,
+						lonlat: new Tmapv2.LatLng(toiletList[z].refineWgs84Lat, toiletList[z].refineWgs84Logt),//좌표 지정
+						add : toiletList[z].refineRoadnmAddr
 					}
 				}
 			}
@@ -305,7 +305,7 @@
 						setToiletInfo(toiletObj);
 					}
 					// 해당위치 센터로 이동 시키면 됨
-					map.setCenter(new Tmapv2.LatLng(toiletObj.refine_WGS84_LAT ,toiletObj.refine_WGS84_LOGT));
+					map.setCenter(new Tmapv2.LatLng(toiletObj.refineWgs84Lat ,toiletObj.refineWgs84Logt));
 					info();
 				}, function (error) {
 					console.error(error);
@@ -326,19 +326,19 @@
 
 		// popup 화장실 정보 바인딩
 		function setToiletInfo(obj) {
-			document.getElementById("pbctlt_PLC_NM").innerHTML = obj.pbctlt_PLC_NM;
-			document.getElementById("male_UIL_CNT").innerHTML = obj.male_UIL_CNT;
-			document.getElementById("female_WTRCLS_CNT").innerHTML = obj.female_WTRCLS_CNT;
-			document.getElementById("male_WTRCLS_CNT").innerHTML = obj.male_WTRCLS_CNT;
-			document.getElementById("female_DSPSN_WTRCLS_CNT").innerHTML = obj.female_DSPSN_WTRCLS_CNT;
-			document.getElementById("male_DSPSN_UIL_CNT").innerHTML = obj.male_DSPSN_UIL_CNT;
-			document.getElementById("female_KID_WTRCLS_CNT").innerHTML = obj.female_KID_WTRCLS_CNT;
-			document.getElementById("male_DSPSN_WTRCLS_CNT").innerHTML = obj.male_DSPSN_WTRCLS_CNT;
-			document.getElementById("male_FEMALE_CMNUSE_TOILET_YN").innerHTML = obj.male_FEMALE_CMNUSE_TOILET_YN;
-			document.getElementById("male_KID_UIL_CNT").innerHTML = obj.male_KID_UIL_CNT;
-			document.getElementById("open_TM_INFO").innerHTML = obj.open_TM_INFO;
-			document.getElementById("male_KID_WTRCLS_CNT").innerHTML = obj.male_KID_WTRCLS_CNT;
-			document.getElementById("refine_LOTNO_ADDR").innerHTML = obj.refine_LOTNO_ADDR;
+			document.getElementById("pbctltPlcNm").innerHTML = obj.pbctltPlcNm;
+			document.getElementById("maleUilCnt").innerHTML = obj.maleUilCnt;
+			document.getElementById("femaleWtrclsCnt").innerHTML = obj.femaleWtrclsCnt;
+			document.getElementById("maleWtrclsCnt").innerHTML = obj.maleWtrclsCnt;
+			document.getElementById("femaleDspsnWtrclsCnt").innerHTML = obj.femaleDspsnWtrclsCnt;
+			document.getElementById("maleDspsnUilCnt").innerHTML = obj.maleDspsnUilCnt;
+			document.getElementById("femaleKidWtrclsCnt").innerHTML = obj.femaleKidWtrclsCnt;
+			document.getElementById("maleDspsnWtrclsCnt").innerHTML = obj.maleDspsnWtrclsCnt;
+			document.getElementById("maleFemaleCmnuseToiletYn").innerHTML = obj.maleFemaleCmnuseToiletYn;
+			document.getElementById("maleKidUilCnt").innerHTML = obj.maleKidUilCnt;
+			document.getElementById("openTmInfo").innerHTML = obj.openTmInfo;
+			document.getElementById("maleKidWtrclsCnt").innerHTML = obj.maleKidWtrclsCnt;
+			document.getElementById("refineLotnoAddr").innerHTML = obj.refineLotnoAddr;
 		}
 
 		var chackList = [];
@@ -384,7 +384,7 @@
 
 		function getTolietObjectData(lat, logt) {
 			for (var i = 0; i < toiletList.length; i++) {
-				if (toiletList[i].refine_WGS84_LAT == lat && toiletList[i].refine_WGS84_LOGT == logt ) {
+				if (toiletList[i].refineWgs84Lat == lat && toiletList[i].refineWgs84Logt == logt ) {
 					return toiletList[i];
 				}
 			}

@@ -20,4 +20,8 @@ public class SampleServiceImpl implements SampleService{
 	public List<SampleRVo> selectTable(SamplePVo paramVo) {
 		return sample.selectTable(paramVo);
 	};
+
+	public void getEmpty() {
+
+	}
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.asgmt.task.coin.dao.CoinDao">
+
+	<select id="selectSuggestionCoin" parameterType="com.asgmt.task.coin.vo.SuggestionCoinPVo"
+	resultType="com.asgmt.task.coin.vo.SuggestionCoinRVo">
+		SELECT *
+		FROM rcmnd_coin coin
+		<choose>
+			<when test="timeDivisoin != null and candleName != null">
+				WHERE coin.TIME_DIVISOIN = #{timeDivisoin} and coin.CANDLE_NAME = #{candleName}
+			</when>
+			<when test="timeDivisoin != null">
+				WHERE coin.TIME_DIVISOIN = #{timeDivisoin}
+			</when>
+			<when test="candleName != null">
+				WHERE coin.CANDLE_NAME = #{candleName}
+			</when>
+		</choose>
+	</select>
+
+	<insert id="inserRcmndCoin" parameterType="java.util.List">
+		INSERT INTO rcmnd_coin (
+			TIME_DIVISOIN,
+			COIN_EN_NAME,
+			COIN_KO_NAME,
+			CANDLE_NAME,
+			TRENDS,
+			PRICE,
+			CALL_TIME
+		) VALUES
+		<foreach collection="list" item="vo" separator=",">
+		(
+			#{vo.timeDivisoin},
+			#{vo.coinEnName},
+			#{vo.coinKoName},
+			#{vo.candleName},
+			#{vo.trends},
+			#{vo.price},
+			#{vo.callTime}
+		)
+		</foreach>
+	</insert>
+
+	<delete id="deleteRcmndCoin" parameterType="String">
+		DELETE FROM rcmnd_coin T WHERE T.TIME_DIVISOIN = ${value}
+	</delete>
+</mapper>
