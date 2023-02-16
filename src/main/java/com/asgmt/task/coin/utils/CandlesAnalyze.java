@@ -9,7 +9,7 @@ public class CandlesAnalyze {
 
 	/**
 	 *
-	 * @see 해머형/ 역해머형
+	 * @see 해머형 / 역해머형
 	 * @param coinList
 	 * @param time
 	 * @param coinInfo

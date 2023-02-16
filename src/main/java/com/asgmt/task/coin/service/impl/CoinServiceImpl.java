@@ -30,7 +30,7 @@ public class CoinServiceImpl implements CoinService {
 	public static List<SuggestionCoinRVo> lst = new ArrayList<SuggestionCoinRVo>();
 	SimpleDateFormat timeFormet = new SimpleDateFormat( "yyyy년 MM월dd일 HH시mm분ss초");
 
-	@Scheduled(cron = "* 0/15 * * * *")	// 15분마다
+	@Scheduled(cron = "0 0/15 * * * *")	// 15분마다
 	public void test1() throws Exception {
 		CoinParamVo param = new CoinParamVo();
 
