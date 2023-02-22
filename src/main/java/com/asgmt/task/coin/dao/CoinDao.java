@@ -12,9 +12,6 @@ import com.asgmt.task.coin.vo.SuggestionCoinRVo;
 @Repository
 public interface CoinDao {
 
-	public void inserRcmndCoin(List<SuggestionCoinRVo> paramVo);
-
 	public List<SuggestionCoinRVo> selectSuggestionCoin(SuggestionCoinPVo param);
 
-	public void deleteRcmndCoin(String value);
 }
