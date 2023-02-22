@@ -11,7 +11,7 @@
 		FROM rcmnd_coin coin
 		<choose>
 			<when test="timeDivisoin != null and candleName != null">
-				WHERE coin.TIME_DIVISOIN = #{timeDivisoin} AND coin.CANDLE_NAME = #{candleName}
+				WHERE coin.TIME_DIVISOIN = #{timeDivisoin} and coin.CANDLE_NAME = #{candleName}
 			</when>
 			<when test="timeDivisoin != null">
 				WHERE coin.TIME_DIVISOIN = #{timeDivisoin}
@@ -48,22 +48,4 @@
 	<delete id="deleteRcmndCoin" parameterType="String">
 		DELETE FROM rcmnd_coin T WHERE T.TIME_DIVISOIN = ${value}
 	</delete>
-	
-	<select id="selectTransactionCoin" parameterType="com.asgmt.task.coin.vo.TransactionCoinPVo"
-	resultType="com.asgmt.task.coin.vo.TransactionCoinRVo">
-		SELECT *
-		FROM transaction_coin_list coin
-		WHERE coin.USER_CODE = #{userCode} 
-		<choose>
-			<when test="timeDivisoin != null and candleName != null">
-				AND coin.TIME_DIVISOIN = #{timeDivisoin} and coin.CANDLE_NAME = #{candleName}
-			</when>
-			<when test="timeDivisoin != null">
-				AND coin.TIME_DIVISOIN = #{timeDivisoin}
-			</when>
-			<when test="candleName != null">
-				AND coin.CANDLE_NAME = #{candleName}
-			</when>
-		</choose>
-	</select>
 </mapper>
