@@ -14,7 +14,6 @@ import com.asgmt.task.coin.vo.SuggestionCoinPVo;
 import com.asgmt.task.coin.vo.SuggestionCoinRVo;
 import com.google.gson.Gson;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class CoinApiController {
 
