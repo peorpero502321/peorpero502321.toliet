@@ -21,4 +21,31 @@
 			</when>
 		</choose>
 	</select>
+
+	<insert id="inserRcmndCoin" parameterType="java.util.List">
+		INSERT INTO rcmnd_coin (
+			TIME_DIVISOIN,
+			COIN_EN_NAME,
+			COIN_KO_NAME,
+			CANDLE_NAME,
+			TRENDS,
+			PRICE,
+			CALL_TIME
+		) VALUES
+		<foreach collection="list" item="vo" separator=",">
+		(
+			#{vo.timeDivisoin},
+			#{vo.coinEnName},
+			#{vo.coinKoName},
+			#{vo.candleName},
+			#{vo.trends},
+			#{vo.price},
+			#{vo.callTime}
+		)
+		</foreach>
+	</insert>
+
+	<delete id="deleteRcmndCoin" parameterType="String">
+		DELETE FROM rcmnd_coin T WHERE T.TIME_DIVISOIN = ${value}
+	</delete>
 </mapper>

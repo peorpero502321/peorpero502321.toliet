@@ -7,11 +7,17 @@ import org.springframework.stereotype.Repository;
 
 import com.asgmt.task.coin.vo.SuggestionCoinPVo;
 import com.asgmt.task.coin.vo.SuggestionCoinRVo;
+import com.asgmt.task.coin.vo.TransactionCoinRVo;
 
 @Mapper
 @Repository
 public interface CoinDao {
 
+	public void inserRcmndCoin(List<SuggestionCoinRVo> paramVo);
+
 	public List<SuggestionCoinRVo> selectSuggestionCoin(SuggestionCoinPVo param);
 
+	public void deleteRcmndCoin(String value);
+	
+	public List<TransactionCoinRVo> selectTransactionCoin(SuggestionCoinPVo param);
 }
