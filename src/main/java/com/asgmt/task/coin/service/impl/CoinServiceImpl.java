@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.asgmt.task.coin.dao.CoinDao;
 import com.asgmt.task.coin.service.CoinService;
-import com.asgmt.task.coin.utils.CandlesAnalyze;
+import com.asgmt.task.coin.utils.CandlesAnalyzeIncrease;
 import com.asgmt.task.coin.vo.CoinParamVo;
 import com.asgmt.task.coin.vo.SuggestionCoinPVo;
 import com.asgmt.task.coin.vo.SuggestionCoinRVo;
@@ -29,7 +29,7 @@ public class CoinServiceImpl implements CoinService {
 
 	public static List<SuggestionCoinRVo> lst = new ArrayList<SuggestionCoinRVo>();
 	SimpleDateFormat timeFormet = new SimpleDateFormat( "yyyy년 MM월dd일 HH시mm분ss초");
-	
+
 	@Scheduled(cron = "0 0/5 * * * *")	// 5분마다
 	public void test5() throws Exception {
 		CoinParamVo param = new CoinParamVo();
@@ -97,7 +97,7 @@ public class CoinServiceImpl implements CoinService {
 		coin.deleteRcmndCoin(value);
 		selectCoinList(param);
 	}
-	
+
 
 	@Override
 	public List<SuggestionCoinRVo> selectSuggestionCoin(SuggestionCoinPVo param) {
@@ -140,16 +140,16 @@ public class CoinServiceImpl implements CoinService {
 						Thread.sleep(100);
 						List<Map<String, String>> coinList = selectCoin(param);
 
-						coinVo = CandlesAnalyze.Hammer(coinList, param.getTime(), obj);
+						coinVo = CandlesAnalyzeIncrease.Hammer(coinList, param.getTime(), obj);
 						if (coinVo != null) {
 							lst.add(coinVo);
 						}
-						coinVo = CandlesAnalyze.bullishEngulfing(coinList, param.getTime(), obj);
+						coinVo = CandlesAnalyzeIncrease.bullishEngulfing(coinList, param.getTime(), obj);
 						if (coinVo != null) {
 							lst.add(coinVo);
 						}
 
-						coinVo = CandlesAnalyze.morningStar(coinList, param.getTime(), obj);
+						coinVo = CandlesAnalyzeIncrease.morningStar(coinList, param.getTime(), obj);
 						if (coinVo != null) {
 							lst.add(coinVo);
 						}
@@ -180,7 +180,7 @@ public class CoinServiceImpl implements CoinService {
 		String coinJson = OkHttpApi.getJsonData("c", param.getDateType(), param.getTime(), param.getMarket(), param.getCount());
 		List<Map<String, String>> list = null;
 		try {
-			
+
 			list = JsonStringConvert.getListMap(coinJson);
 
 		} catch (JsonMappingException e) {

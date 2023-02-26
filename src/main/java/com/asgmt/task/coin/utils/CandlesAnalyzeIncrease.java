@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.asgmt.task.coin.vo.SuggestionCoinRVo;
 
-public class CandlesAnalyze {
+public class CandlesAnalyzeIncrease {
 
 	/**
 	 *
